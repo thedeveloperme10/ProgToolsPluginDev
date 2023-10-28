@@ -25,6 +25,6 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="BugImpactAnalyzer" id="Bug Impact Analyzer" anchor="bottom"/>
+        <toolWindow factoryClass="BugImpactAnalyzerToolWindowFactory" id="BugImpactAnalyzer" anchor="right"/>
     </extensions>
 </idea-plugin>
