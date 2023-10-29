@@ -1,10 +1,14 @@
 package panel;
 
+import com.intellij.icons.AllIcons;
+import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.project.DumbAwareAction;
 import com.intellij.ui.ScrollPaneFactory;
 import com.intellij.ui.components.panels.NonOpaquePanel;
 import com.intellij.ui.table.TableView;
 import model.BugImpact;
+import org.jetbrains.annotations.NotNull;
 import service.BugImpactAnalysis;
 import table.BugImpactTableModel;
 
@@ -60,6 +64,39 @@ public class TableResultsPanel extends NonOpaquePanel
         this.bugImpactTableModel.setItems(bugList);
         this.resultsTable.updateColumnSizes();
 
+    }
+
+    private void clearResults()
+    {
+        this.bugImpactTableModel.setItems(new ArrayList<>());
+    }
+
+    public class SearchAction extends DumbAwareAction
+    {
+        protected SearchAction()
+        {
+            super("Get StackOverflow Issues", "Get StackOverflow issues", AllIcons.Actions.Execute);
+        }
+
+        @Override
+        public void actionPerformed(@NotNull AnActionEvent e)
+        {
+            TableResultsPanel.this.clearResults();
+        }
+    }
+
+    public class ClearTableAction extends DumbAwareAction
+    {
+        protected ClearTableAction()
+        {
+            super("Clear Inputs and Results", "Clear inputs and results", AllIcons.Actions.Refresh);
+        }
+
+        @Override
+        public void actionPerformed(@NotNull AnActionEvent e)
+        {
+            TableResultsPanel.this.clearResults();
+        }
     }
 
 }

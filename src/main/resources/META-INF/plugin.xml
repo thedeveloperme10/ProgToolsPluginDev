@@ -25,6 +25,13 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="BugImpactAnalyzerToolWindowFactory" id="BugImpactAnalyzer" anchor="right"/>
+        <toolWindow factoryClass="BugImpactAnalyzerToolWindowFactory" id="Bug Impact Analyzer" anchor="right"/>
     </extensions>
+
+    <actions>
+        <action id="actions.SearchGithubAction" class="ContextMenuAction" text="Search Github"
+                description="Search code snippets on GitHub repositories" icon="AllIcons.Vcs.Vendors.Github" >
+            <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="$SearchWeb"/>
+        </action>
+    </actions>
 </idea-plugin>
