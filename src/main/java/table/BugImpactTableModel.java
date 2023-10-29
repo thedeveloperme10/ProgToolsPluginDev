@@ -36,7 +36,7 @@ public class BugImpactTableModel extends ListTableModel<BugImpact>
                         {
                             return switch (eachColumn) {
                                 case "MethodName" -> o.getBugMethodName();
-                                case "FunctionImpactPercentage" -> o.getFunctionImpactPercentage().toString();
+                                case "FunctionImpactPercentage" -> String.valueOf(o.getFunctionImpactPercentage());
                                 default -> "Not Available";
                             };
                         }

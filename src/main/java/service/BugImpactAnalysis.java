@@ -2,11 +2,22 @@ package service;
 
 import model.BugImpact;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public final class BugImpactAnalysis {
+public class BugImpactAnalysis {
 
-    public static void updateBugImpact(List<BugImpact> bugImpactList) {
+    List<BugImpact> bugImpactList = new ArrayList<>();
+
+    public List<BugImpact> getBugImpactList() {
+        return bugImpactList;
+    }
+
+    public void setBugImpactList(List<BugImpact> bugImpactList) {
+        this.bugImpactList = bugImpactList;
+    }
+
+    public void updateBugImpactAnalysis() {
 
         for(BugImpact bug: bugImpactList) {
             bug.setBugId(1);
@@ -18,6 +29,10 @@ public final class BugImpactAnalysis {
         }
 
 
+    }
+
+    public void addBugForAnalysis(BugImpact bug) {
+        bugImpactList.add(bug);
     }
 
 }

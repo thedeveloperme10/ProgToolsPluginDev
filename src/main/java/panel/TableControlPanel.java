@@ -21,14 +21,21 @@ public class TableControlPanel extends NonOpaquePanel
 {
 
     private static final Logger LOG = Logger.getInstance(TableControlPanel.class);
-    private final TableView<BugImpact> resultsTable;
-    private final BugImpactTableModel bugImpactTableModel;
+    private TableView<BugImpact> resultsTable;
+    private BugImpactTableModel bugImpactTableModel;
+    private static final BugImpactAnalysis bugImpact = new BugImpactAnalysis();
 
     public TableControlPanel(TableView<BugImpact> resultsTable, BugImpactTableModel bugImpactTableModel)
     {
         this.resultsTable = resultsTable;
         this.bugImpactTableModel = bugImpactTableModel;
+//        this.bugImpact = new BugImpactAnalysis();
         this.init();
+    }
+
+
+    public TableControlPanel() {
+
     }
 
     private void init()
@@ -88,14 +95,15 @@ public class TableControlPanel extends NonOpaquePanel
 
     private void getBugImpact()
     {
-        List<BugImpact> bugList = new ArrayList<>();
+
+        List<BugImpact> bugList = bugImpact.getBugImpactList();
         BugImpact bug1 = new BugImpact();
         BugImpact bug2 = new BugImpact();
         bugList.add(bug1);
         bugList.add(bug2);
         try
         {
-            BugImpactAnalysis.updateBugImpact(bugList);
+            bugImpact.updateBugImpactAnalysis();
         }
         catch (Exception e)
         {
@@ -113,6 +121,11 @@ public class TableControlPanel extends NonOpaquePanel
 
         this.bugImpactTableModel.setItems(bugList);
         this.resultsTable.updateColumnSizes();
+    }
+
+    public static void addBugForAnalysis(BugImpact bug) {
+        bugImpact.addBugForAnalysis(bug);
+
     }
 
 }

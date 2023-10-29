@@ -1,12 +1,35 @@
+import com.intellij.openapi.actionSystem.ActionToolbar;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.editor.CaretModel;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.DumbAwareAction;
+import com.intellij.ui.table.TableView;
+import com.intellij.util.ui.ColumnInfo;
+import model.BugImpact;
 import org.jetbrains.annotations.NotNull;
+import panel.TableControlPanel;
+import table.BugImpactTableModel;
+import table.ResultsTable;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ContextMenuAction extends DumbAwareAction
 {
+
+    AtomicInteger atomicInteger = new AtomicInteger();
+    TableControlPanel tableControlPanel = new TableControlPanel();
+
+//    private void init()
+//    {
+//        this.atomicInteger = new AtomicInteger();
+//        this.tableControlPanel = new TableControlPanel(null, null);
+//    }
+
     @Override
     public void actionPerformed(@NotNull AnActionEvent e)
     {
@@ -16,6 +39,15 @@ public class ContextMenuAction extends DumbAwareAction
 
         System.out.println("Marked Bug: ");
         System.out.println(selectedText);
+
+        BugImpact bug = new BugImpact();
+        Integer id = atomicInteger.incrementAndGet();
+        bug.setBugId(id);
+        bug.setBugMethodName(selectedText);
+
+        // Add Bug
+        tableControlPanel.addBugForAnalysis(bug);
+
     }
 
     @Override
