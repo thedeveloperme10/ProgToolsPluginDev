@@ -3,8 +3,10 @@ import com.intellij.openapi.ui.Splitter;
 import com.intellij.ui.IdeBorderFactory;
 import com.intellij.ui.OnePixelSplitter;
 import com.intellij.ui.SideBorder;
+import panel.AffectedResultsPanel;
 import panel.TableControlPanel;
 import panel.TableResultsPanel;
+import table.AffectedResultsTable;
 import table.BugImpactTableModel;
 import table.FunctionAffectedTableModel;
 import table.ResultsTable;
@@ -12,7 +14,7 @@ import table.ResultsTable;
 import javax.swing.*;
 import java.util.ArrayList;
 
-public class BugImpactAnalyzerToolWindow
+public class AffectedToolWindow
 {
     private final JPanel contentToolWindow;
 
@@ -21,26 +23,21 @@ public class BugImpactAnalyzerToolWindow
         return this.contentToolWindow;
     }
 
-    public BugImpactAnalyzerToolWindow()
+    public AffectedToolWindow()
     {
         this.contentToolWindow = new SimpleToolWindowPanel(true, true);
-        BugImpactTableModel bugImpactTableModel = new BugImpactTableModel(BugImpactTableModel.generateColumnInfo(), new ArrayList<>());
-        ResultsTable resultsTable = new ResultsTable(bugImpactTableModel);
         FunctionAffectedTableModel functionAffectedTableModel = new FunctionAffectedTableModel(FunctionAffectedTableModel.generateColumnInfo(), new ArrayList<>());
+        AffectedResultsTable affectedResultsTable = new AffectedResultsTable(functionAffectedTableModel);
 
-        TableResultsPanel tableResultsPanel = new TableResultsPanel(resultsTable,bugImpactTableModel);
-        tableResultsPanel.setBorder(IdeBorderFactory.createBorder(SideBorder.TOP | SideBorder.RIGHT));
-        TableControlPanel tableControlPanel = new TableControlPanel(resultsTable, bugImpactTableModel);
-        tableControlPanel.setBorder(IdeBorderFactory.createBorder(SideBorder.TOP | SideBorder.RIGHT | SideBorder.BOTTOM));
+        AffectedResultsPanel affectedResultsPanel = new AffectedResultsPanel(affectedResultsTable, functionAffectedTableModel);
+        affectedResultsPanel.setBorder(IdeBorderFactory.createBorder(SideBorder.TOP | SideBorder.RIGHT | SideBorder.BOTTOM));
 
         OnePixelSplitter horizontalSplitter = new OnePixelSplitter(true, 0.0f);
         horizontalSplitter.setBorder(BorderFactory.createEmptyBorder());
         horizontalSplitter.setDividerPositionStrategy(Splitter.DividerPositionStrategy.KEEP_FIRST_SIZE);
         horizontalSplitter.setResizeEnabled(false);
-        horizontalSplitter.setFirstComponent(tableControlPanel);
-        horizontalSplitter.setSecondComponent(tableResultsPanel);
+        horizontalSplitter.setFirstComponent(affectedResultsPanel);
 
         this.contentToolWindow.add(horizontalSplitter);
-
     }
 }

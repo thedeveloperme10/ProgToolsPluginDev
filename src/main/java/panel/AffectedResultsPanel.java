@@ -1,33 +1,28 @@
 package panel;
 
-import com.intellij.icons.AllIcons;
-import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.project.DumbAwareAction;
 import com.intellij.ui.ScrollPaneFactory;
 import com.intellij.ui.components.panels.NonOpaquePanel;
 import com.intellij.ui.table.TableView;
+import model.AffectedItem;
 import model.BugImpact;
-import org.jetbrains.annotations.NotNull;
-import service.BugImpactAnalysis;
 import table.BugImpactTableModel;
+import table.FunctionAffectedTableModel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
-public class TableResultsPanel extends NonOpaquePanel
+public class AffectedResultsPanel extends NonOpaquePanel
 {
 
-    private static final Logger LOG = Logger.getInstance(TableResultsPanel.class);
-    private final TableView<BugImpact> resultsTable;
-    private final BugImpactTableModel bugImpactTableModel;
+    private static final Logger LOG = Logger.getInstance(AffectedResultsPanel.class);
+    private final TableView<AffectedItem> resultsTable;
+    private final FunctionAffectedTableModel functionAffectedTableModel;
 
-    public TableResultsPanel(TableView<BugImpact> resultsTable, BugImpactTableModel bugImpactTableModel)
+    public AffectedResultsPanel(TableView<AffectedItem> resultsTable, FunctionAffectedTableModel functionAffectedTableModel)
     {
         this.resultsTable = resultsTable;
-        this.bugImpactTableModel = bugImpactTableModel;
+        this.functionAffectedTableModel = functionAffectedTableModel;
         this.init();
     }
 

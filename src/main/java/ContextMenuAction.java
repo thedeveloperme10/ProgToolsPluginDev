@@ -5,12 +5,17 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.DumbAwareAction;
 import org.jetbrains.annotations.NotNull;
 
-public class ContextMenuAction extends DumbAwareAction {
+public class ContextMenuAction extends DumbAwareAction
+{
     @Override
-    public void actionPerformed(@NotNull AnActionEvent e) {
+    public void actionPerformed(@NotNull AnActionEvent e)
+    {
         Editor ediTorRequiredData = e.getRequiredData(CommonDataKeys.EDITOR);
         CaretModel caretModel = ediTorRequiredData.getCaretModel();
         String selectedText = caretModel.getCurrentCaret().getSelectedText();
+
+        System.out.println("Marked Bug: ");
+        System.out.println(selectedText);
     }
 
     @Override
