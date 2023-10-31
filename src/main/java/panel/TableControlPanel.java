@@ -29,7 +29,6 @@ public class TableControlPanel extends NonOpaquePanel
     {
         this.resultsTable = resultsTable;
         this.bugImpactTableModel = bugImpactTableModel;
-//        this.bugImpact = new BugImpactAnalysis();
         this.init();
     }
 
@@ -61,7 +60,7 @@ public class TableControlPanel extends NonOpaquePanel
 
     private void clearResults()
     {
-
+        bugImpact.setBugImpactList(new ArrayList<>());
         this.bugImpactTableModel.setItems(new ArrayList<>());
     }
 
@@ -69,7 +68,7 @@ public class TableControlPanel extends NonOpaquePanel
     {
         protected SearchAction()
         {
-            super("Get StackOverflow Issues", "Get StackOverflow issues", AllIcons.Actions.Refresh);
+            super("Reanalyze", "Reanalyze marked Bugs", AllIcons.Actions.Refresh);
         }
 
         @Override
@@ -97,10 +96,6 @@ public class TableControlPanel extends NonOpaquePanel
     {
 
         List<BugImpact> bugList = bugImpact.getBugImpactList();
-        BugImpact bug1 = new BugImpact();
-        BugImpact bug2 = new BugImpact();
-        bugList.add(bug1);
-        bugList.add(bug2);
         try
         {
             bugImpact.updateBugImpactAnalysis();
@@ -123,9 +118,9 @@ public class TableControlPanel extends NonOpaquePanel
         this.resultsTable.updateColumnSizes();
     }
 
-    public static void addBugForAnalysis(BugImpact bug) {
-        bugImpact.addBugForAnalysis(bug);
-
+    public void addBugForAnalysis(BugImpact bug) {
+        bugImpact.getBugImpactList().add(bug);
+        getBugImpact();
     }
 
 }

@@ -12,9 +12,9 @@ public class BugImpact {
     Integer bugLineNumber;
     //Add Filename;
 
-    List<String> apiAffected = new ArrayList<String>();
-    List<String> functionAffected = new ArrayList<String>();
-    List<String> fileAffected = new ArrayList<String>();
+    List<String> apiAffected = new ArrayList<>();
+    List<String> functionAffected = new ArrayList<>();
+    List<String> fileAffected = new ArrayList<>();
 
     Float apiImpactPercentage;
     Float functionImpactPercentage;
