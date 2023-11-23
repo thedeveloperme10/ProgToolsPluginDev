@@ -12,9 +12,9 @@ public class BugImpact {
     Integer bugLineNumber;
     //Add Filename;
 
-    List<String> apiAffected = new ArrayList<>();
-    List<String> functionAffected = new ArrayList<>();
-    List<String> fileAffected = new ArrayList<>();
+    List<AffectedItem> apiAffected = new ArrayList<>();
+    List<AffectedItem> functionAffected = new ArrayList<>();
+    List<AffectedItem> fileAffected = new ArrayList<>();
 
     Float apiImpactPercentage;
     Float functionImpactPercentage;
@@ -44,27 +44,27 @@ public class BugImpact {
         this.bugLineNumber = bugLineNumber;
     }
 
-    public List<String> getApiAffected() {
+    public List<AffectedItem> getApiAffected() {
         return apiAffected;
     }
 
-    public void setApiAffected(List<String> apiAffected) {
+    public void setApiAffected(List<AffectedItem> apiAffected) {
         this.apiAffected = apiAffected;
     }
 
-    public List<String> getFunctionAffected() {
+    public List<AffectedItem> getFunctionAffected() {
         return functionAffected;
     }
 
-    public void setFunctionAffected(List<String> functionAffected) {
+    public void setFunctionAffected(List<AffectedItem> functionAffected) {
         this.functionAffected = functionAffected;
     }
 
-    public List<String> getFileAffected() {
+    public List<AffectedItem> getFileAffected() {
         return fileAffected;
     }
 
-    public void setFileAffected(List<String> fileAffected) {
+    public void setFileAffected(List<AffectedItem> fileAffected) {
         this.fileAffected = fileAffected;
     }
 
@@ -106,6 +106,4 @@ public class BugImpact {
                 ", fileImpactPercentage=" + fileImpactPercentage +
                 '}';
     }
-
-
 }

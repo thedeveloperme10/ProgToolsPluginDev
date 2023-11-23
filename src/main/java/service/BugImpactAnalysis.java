@@ -1,13 +1,17 @@
 package service;
 
+import model.AffectedItem;
 import model.BugImpact;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BugImpactAnalysis {
 
     List<BugImpact> bugImpactList = new ArrayList<>();
+
+    FunctionCallAnalyzer functionCallAnalyzer = new FunctionCallAnalyzer();
 
     public List<BugImpact> getBugImpactList() {
         return bugImpactList;
@@ -17,19 +21,30 @@ public class BugImpactAnalysis {
         this.bugImpactList = bugImpactList;
     }
 
-    public void updateBugImpactAnalysis() {
+    public void updateBugImpactAnalysis() throws IOException {
 
         for(BugImpact bug: bugImpactList) {
-            List<String> apiAffected = bug.getApiAffected();
-            apiAffected.add("affectedMethod1");
-            bug.setApiAffected(apiAffected);
+            List<AffectedItem> apiAffectedList = bug.getApiAffected();
+            AffectedItem affectedItem = new AffectedItem();
+            affectedItem.setAffected("affectedMethod1");
+            apiAffectedList.add(affectedItem);
+            bug.setApiAffected(apiAffectedList);
             bug.setFunctionImpactPercentage(55.5f);
+//            System.out.println(affectedItem.toString());
+
+//            functionCallAnalyzer.main1();
+
+            MethodCallAnalyzer methodCallAnalyzer = new MethodCallAnalyzer();
+            methodCallAnalyzer.main1();
+
+
         }
 
     }
 
     public void addBugForAnalysis(BugImpact bug) {
         bugImpactList.add(bug);
+
     }
 
 }

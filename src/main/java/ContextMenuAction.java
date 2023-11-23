@@ -22,13 +22,14 @@ public class ContextMenuAction extends DumbAwareAction
 {
 
     AtomicInteger atomicInteger = new AtomicInteger();
-    TableControlPanel tableControlPanel = new TableControlPanel();
 
-//    private void init()
-//    {
-//        this.atomicInteger = new AtomicInteger();
-//        this.tableControlPanel = new TableControlPanel(null, null);
-//    }
+    private TableView<BugImpact> resultsTable = new TableView<>();
+    private List<BugImpact> bugImpacts = new ArrayList<>();
+
+    private BugImpactTableModel bugImpactTableModel = new BugImpactTableModel(BugImpactTableModel.generateColumnInfo(), bugImpacts);
+
+    TableControlPanel tableControlPanel = new TableControlPanel(resultsTable, bugImpactTableModel);
+
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e)

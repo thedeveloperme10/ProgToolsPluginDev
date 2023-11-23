@@ -7,10 +7,13 @@ import com.intellij.openapi.project.DumbAwareAction;
 import com.intellij.ui.ScrollPaneFactory;
 import com.intellij.ui.components.panels.NonOpaquePanel;
 import com.intellij.ui.table.TableView;
+import com.intellij.util.ui.ColumnInfo;
+import model.AffectedItem;
 import model.BugImpact;
 import org.jetbrains.annotations.NotNull;
 import service.BugImpactAnalysis;
 import table.BugImpactTableModel;
+import table.FunctionAffectedTableModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,16 +28,13 @@ public class TableControlPanel extends NonOpaquePanel
     private BugImpactTableModel bugImpactTableModel;
     private static final BugImpactAnalysis bugImpact = new BugImpactAnalysis();
 
+    private AffectedControlPanel affectedControlPanel;
+
     public TableControlPanel(TableView<BugImpact> resultsTable, BugImpactTableModel bugImpactTableModel)
     {
         this.resultsTable = resultsTable;
         this.bugImpactTableModel = bugImpactTableModel;
         this.init();
-    }
-
-
-    public TableControlPanel() {
-
     }
 
     private void init()
@@ -45,6 +45,11 @@ public class TableControlPanel extends NonOpaquePanel
         ActionToolbar toolbar = this.createToolbar();
         toolbar.setTargetComponent(this);
         this.add(toolbar.getComponent());
+
+        TableView<AffectedItem> affectedResultsTable = new TableView<>();
+        List<AffectedItem> functionAffected = new ArrayList<>();
+        FunctionAffectedTableModel functionAffectedTableModel = new FunctionAffectedTableModel(FunctionAffectedTableModel.generateColumnInfo(), functionAffected);
+        this.affectedControlPanel = new AffectedControlPanel(affectedResultsTable, functionAffectedTableModel);
 
         getBugImpact();
     }
@@ -95,7 +100,6 @@ public class TableControlPanel extends NonOpaquePanel
     private void getBugImpact()
     {
 
-        List<BugImpact> bugList = bugImpact.getBugImpactList();
         try
         {
             bugImpact.updateBugImpactAnalysis();
@@ -104,7 +108,7 @@ public class TableControlPanel extends NonOpaquePanel
         {
             LOG.error(e.getMessage());
         }
-        if (bugList.isEmpty())
+        if (bugImpact.getBugImpactList().isEmpty())
         {
             this.resultsTable.getEmptyText().setText("No bugs selected!");
         }
@@ -114,13 +118,14 @@ public class TableControlPanel extends NonOpaquePanel
 //            this.resultsTable.getEmptyText().setText("No impact found for the given bug!");
 //        }
 
-        this.bugImpactTableModel.setItems(bugList);
+        this.bugImpactTableModel.setItems(bugImpact.getBugImpactList());
         this.resultsTable.updateColumnSizes();
     }
 
     public void addBugForAnalysis(BugImpact bug) {
         bugImpact.getBugImpactList().add(bug);
         getBugImpact();
+        affectedControlPanel.getFunctionAffected(bug);
     }
 
 }
