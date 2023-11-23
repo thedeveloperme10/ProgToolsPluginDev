@@ -52,6 +52,17 @@ public class TableControlPanel extends NonOpaquePanel
         this.affectedControlPanel = new AffectedControlPanel(affectedResultsTable, functionAffectedTableModel);
 
         getBugImpact();
+
+//        BugImpact bug = new BugImpact();
+//        bug.setBugMethodName("BUG1");
+//        bug.setBugId(1);
+//        bug.setFunctionImpactPercentage(21f);
+//        List<AffectedItem> affectedItemList = new ArrayList<>();
+//        AffectedItem affectedItem = new AffectedItem();
+//        affectedItem.setAffected("AffectedMethod12");
+//        affectedItemList.add(affectedItem);
+//        bug.setFunctionAffected(affectedItemList);
+//        addBugForAnalysis(bug);
     }
 
     @NotNull

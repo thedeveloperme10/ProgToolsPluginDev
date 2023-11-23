@@ -24,12 +24,15 @@ public class BugImpactAnalysis {
     public void updateBugImpactAnalysis() throws IOException {
 
         for(BugImpact bug: bugImpactList) {
-            List<AffectedItem> apiAffectedList = bug.getApiAffected();
+            List<AffectedItem> functionAffectedList = bug.getApiAffected();
             AffectedItem affectedItem = new AffectedItem();
             affectedItem.setAffected("affectedMethod1");
-            apiAffectedList.add(affectedItem);
-            bug.setApiAffected(apiAffectedList);
+            functionAffectedList.add(affectedItem);
+            bug.setFunctionAffected(functionAffectedList);
             bug.setFunctionImpactPercentage(55.5f);
+
+            System.out.println("HardCoded AffectedFunc in BugImpactAnalysis");
+
 //            System.out.println(affectedItem.toString());
 
 //            functionCallAnalyzer.main1();
@@ -39,11 +42,6 @@ public class BugImpactAnalysis {
 
 
         }
-
-    }
-
-    public void addBugForAnalysis(BugImpact bug) {
-        bugImpactList.add(bug);
 
     }
 

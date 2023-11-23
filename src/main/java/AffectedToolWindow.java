@@ -3,6 +3,7 @@ import com.intellij.openapi.ui.Splitter;
 import com.intellij.ui.IdeBorderFactory;
 import com.intellij.ui.OnePixelSplitter;
 import com.intellij.ui.SideBorder;
+import panel.AffectedControlPanel;
 import panel.AffectedResultsPanel;
 import panel.TableControlPanel;
 import panel.TableResultsPanel;
@@ -30,13 +31,17 @@ public class AffectedToolWindow
         AffectedResultsTable affectedResultsTable = new AffectedResultsTable(functionAffectedTableModel);
 
         AffectedResultsPanel affectedResultsPanel = new AffectedResultsPanel(affectedResultsTable, functionAffectedTableModel);
-        affectedResultsPanel.setBorder(IdeBorderFactory.createBorder(SideBorder.TOP | SideBorder.RIGHT | SideBorder.BOTTOM));
+        affectedResultsPanel.setBorder(IdeBorderFactory.createBorder(SideBorder.TOP | SideBorder.RIGHT ));
+
+        AffectedControlPanel affectedControlPanel = new AffectedControlPanel(affectedResultsTable, functionAffectedTableModel);
+        affectedControlPanel.setBorder(IdeBorderFactory.createBorder(SideBorder.TOP | SideBorder.RIGHT | SideBorder.BOTTOM));
 
         OnePixelSplitter horizontalSplitter = new OnePixelSplitter(true, 0.0f);
         horizontalSplitter.setBorder(BorderFactory.createEmptyBorder());
         horizontalSplitter.setDividerPositionStrategy(Splitter.DividerPositionStrategy.KEEP_FIRST_SIZE);
         horizontalSplitter.setResizeEnabled(false);
-        horizontalSplitter.setFirstComponent(affectedResultsPanel);
+        horizontalSplitter.setFirstComponent(affectedControlPanel);
+        horizontalSplitter.setSecondComponent(affectedResultsPanel);
 
         this.contentToolWindow.add(horizontalSplitter);
     }

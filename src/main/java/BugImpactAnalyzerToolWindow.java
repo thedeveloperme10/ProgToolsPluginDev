@@ -26,7 +26,6 @@ public class BugImpactAnalyzerToolWindow
         this.contentToolWindow = new SimpleToolWindowPanel(true, true);
         BugImpactTableModel bugImpactTableModel = new BugImpactTableModel(BugImpactTableModel.generateColumnInfo(), new ArrayList<>());
         ResultsTable resultsTable = new ResultsTable(bugImpactTableModel);
-        FunctionAffectedTableModel functionAffectedTableModel = new FunctionAffectedTableModel(FunctionAffectedTableModel.generateColumnInfo(), new ArrayList<>());
 
         TableResultsPanel tableResultsPanel = new TableResultsPanel(resultsTable,bugImpactTableModel);
         tableResultsPanel.setBorder(IdeBorderFactory.createBorder(SideBorder.TOP | SideBorder.RIGHT));

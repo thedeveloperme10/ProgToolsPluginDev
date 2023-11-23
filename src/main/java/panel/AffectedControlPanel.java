@@ -9,6 +9,7 @@ import com.intellij.ui.table.TableView;
 import model.AffectedItem;
 import model.BugImpact;
 import org.jetbrains.annotations.NotNull;
+import service.AffectedFunctionService;
 import service.BugImpactAnalysis;
 import table.BugImpactTableModel;
 import table.FunctionAffectedTableModel;
@@ -24,7 +25,9 @@ public class AffectedControlPanel extends NonOpaquePanel
     private static final Logger LOG = Logger.getInstance(AffectedControlPanel.class);
     private TableView<AffectedItem> resultsTable;
     private FunctionAffectedTableModel functionAffectedTableModel;
-    private static List<AffectedItem> affectedItemList = new ArrayList<>();
+//    private static List<AffectedItem> affectedItemList = new ArrayList<>();
+
+    private static final AffectedFunctionService affectedFunctionService = new AffectedFunctionService();
 
     public AffectedControlPanel(TableView<AffectedItem> resultsTable, FunctionAffectedTableModel functionAffectedTableModel)
     {
@@ -42,13 +45,9 @@ public class AffectedControlPanel extends NonOpaquePanel
         toolbar.setTargetComponent(this);
         this.add(toolbar.getComponent());
 
-        BugImpact bugImpact = new BugImpact();
-        AffectedItem affectedItem = new AffectedItem();
-        affectedItem.setAffected("AffectedFunction1");
-        affectedItemList.add(affectedItem);
-
-        bugImpact.setFunctionAffected(affectedItemList);
-        getFunctionAffected(bugImpact);
+//        BugImpact bugImpact = new BugImpact();
+//
+//        getFunctionAffected(bugImpact);
     }
 
     @NotNull
@@ -61,7 +60,7 @@ public class AffectedControlPanel extends NonOpaquePanel
 
     private void clearResults()
     {
-        affectedItemList.clear();
+        affectedFunctionService.setAffectedItemList(new ArrayList<>());
         this.functionAffectedTableModel.setItems(new ArrayList<>());
     }
 
@@ -81,22 +80,22 @@ public class AffectedControlPanel extends NonOpaquePanel
 
     public void getFunctionAffected(BugImpact bugImpact)
     {
-        affectedItemList = bugImpact.getFunctionAffected();
-        AffectedItem affectedItem = new AffectedItem();
-        affectedItem.setAffected("AffectedFunction1");
-        affectedItemList.add(affectedItem);
+        affectedFunctionService.setAffectedItemList(bugImpact.getFunctionAffected());
+//        AffectedItem affectedItem = new AffectedItem();
+//        affectedItem.setAffected("AffectedFunction1");
+//        affectedItemList.add(affectedItem);
 
-        bugImpact.setFunctionAffected(affectedItemList);
+//        bugImpact.setFunctionAffected(affectedItemList);
+//
+//        System.out.println(affectedItemList);
+//        System.out.println("HARDCODED AFFECTED_FUNCTION!! in AffectedControlPanel.java");
 
-        System.out.println(affectedItemList);
-        System.out.println("HARDCODED AFFECTED_FUNCTION!! in AffectedControlPanel.java");
-
-        if (affectedItemList.isEmpty())
+        if (affectedFunctionService.getAffectedItemList().isEmpty())
         {
             this.resultsTable.getEmptyText().setText("No Functions Affected by the selected Bug");
         }
 
-        this.functionAffectedTableModel.setItems(affectedItemList);
+        this.functionAffectedTableModel.setItems(affectedFunctionService.getAffectedItemList());
         this.resultsTable.updateColumnSizes();
     }
 
