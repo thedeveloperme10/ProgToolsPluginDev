@@ -22,7 +22,7 @@ public class BugImpactTableModel extends ListTableModel<BugImpact>
         super(columnNames, bugImpacts);
     }
 
-    static final String[] COLUMNS = {"MethodName", "FunctionImpactPercentage"};
+    static final String[] COLUMNS = {"Method Name", "Function Impact Percentage", "Functions Affected", "APIs Affected", "Files Affected"};
     public static ColumnInfo<BugImpact, String>[] generateColumnInfo()
     {
         ColumnInfo<BugImpact, String>[] columnInfos = new ColumnInfo[COLUMNS.length];
@@ -35,8 +35,11 @@ public class BugImpactTableModel extends ListTableModel<BugImpact>
                         public String valueOf(BugImpact o)
                         {
                             return switch (eachColumn) {
-                                case "MethodName" -> o.getBugMethodName();
-                                case "FunctionImpactPercentage" -> String.valueOf(o.getFunctionImpactPercentage());
+                                case "Method Name" -> o.getBugMethodName();
+                                case "Function Impact Percentage" -> String.valueOf(o.getFunctionImpactPercentage());
+                                case "Functions Affected" -> o.getFunctionAffectedString();
+                                case "APIs Affected" -> o.getApiAffectedString();
+                                case "Files Affected" -> o.getFileAffectedString();
                                 default -> "Not Available";
                             };
                         }

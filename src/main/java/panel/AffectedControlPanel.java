@@ -45,9 +45,18 @@ public class AffectedControlPanel extends NonOpaquePanel
         toolbar.setTargetComponent(this);
         this.add(toolbar.getComponent());
 
-//        BugImpact bugImpact = new BugImpact();
-//
-//        getFunctionAffected(bugImpact);
+
+        BugImpact bug = new BugImpact();
+        bug.setBugMethodName("BUG1");
+        bug.setBugId(1);
+        bug.setFunctionImpactPercentage(21f);
+        List<AffectedItem> affectedItemList = new ArrayList<>();
+        AffectedItem affectedItem = new AffectedItem();
+        affectedItem.setAffected("AffectedMethod12");
+        affectedItemList.add(affectedItem);
+        bug.setFunctionAffected(affectedItemList);
+
+        getFunctionAffected(bug);
     }
 
     @NotNull

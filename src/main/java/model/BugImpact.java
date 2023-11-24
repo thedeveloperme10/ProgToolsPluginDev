@@ -106,4 +106,28 @@ public class BugImpact {
                 ", fileImpactPercentage=" + fileImpactPercentage +
                 '}';
     }
+
+    public String getFunctionAffectedString() {
+        String funcAffected = new String();
+        for (AffectedItem affected: functionAffected) {
+            funcAffected += affected.getAffected() + ", " ;
+        }
+        return funcAffected;
+    }
+
+    public String getFileAffectedString() {
+        String fileAffectedString = new String();
+        for (AffectedItem affected: fileAffected) {
+            fileAffectedString += affected.getAffected() + ", " ;
+        }
+        return fileAffectedString;
+    }
+
+    public String getApiAffectedString() {
+        String apiAffectedString = new String();
+        for (AffectedItem affected: apiAffected) {
+            apiAffectedString += affected.getAffected() + ", " ;
+        }
+        return apiAffectedString;
+    }
 }

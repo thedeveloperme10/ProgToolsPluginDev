@@ -12,10 +12,4 @@ public class AffectedItem {
         this.affected = affected;
     }
 
-    @Override
-    public String toString() {
-        return "AffectedItem{" +
-                "affected='" + affected + '\'' +
-                '}';
-    }
 }
