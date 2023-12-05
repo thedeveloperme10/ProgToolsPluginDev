@@ -4,8 +4,13 @@ import model.AffectedItem;
 import model.BugImpact;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+
+import java.util.Map;
+import java.util.Set;
 
 public class BugImpactAnalysis {
 
@@ -23,36 +28,57 @@ public class BugImpactAnalysis {
 
     public void updateBugImpactAnalysis() throws IOException {
 
-        for(BugImpact bug: bugImpactList) {
-            List<AffectedItem> functionAffectedList = bug.getFunctionAffected();
-            AffectedItem affectedItem = new AffectedItem();
-            affectedItem.setAffected("affectedMethod1");
-            functionAffectedList.add(affectedItem);
-            AffectedItem affectedItem1 = new AffectedItem();
-            affectedItem1.setAffected("affectedMethod2");
-            functionAffectedList.add(affectedItem1);
+        functionCallAnalyzer.analyzeProject(); // Analyze the project to build the function call map
+
+
+        for (BugImpact bug : bugImpactList) {
+            // Get the signature of the buggy function
+            String buggyFunctionSignature = bug.getBugMethodName(); // Modify BugImpact to include this information
+
+            System.out.println("buggyFunctionSignature : "+buggyFunctionSignature);
+            // Find all functions that can reach the buggy function
+            System.out.println("Analyzing impact for: " + buggyFunctionSignature);
+
+            Map<String, String> affectedFunctions = functionCallAnalyzer.findFunctionReach(buggyFunctionSignature);
+            int totalUniqueSignatureCount = Integer.parseInt(affectedFunctions.get("totalUniqueSignatureCount"));
+            affectedFunctions.remove("totalUniqueSignatureCount");
+
+
+            // Convert the affected functions to AffectedItem objects with file locations
+            List<AffectedItem> functionAffectedList = convertToAffectedItems(affectedFunctions);
             bug.setFunctionAffected(functionAffectedList);
 
-            List<AffectedItem> fileAffectedList = bug.getFileAffected();
-            AffectedItem af_file1 = new AffectedItem();
-            af_file1.setAffected("FileName1");
-            fileAffectedList.add(af_file1);
+            // Convert keys to a list
+            // List<String> keyList = new ArrayList<>(affectedFunctions.keySet());
+
+            // Convert values to a list
+            List<String> valueList = new ArrayList<>(affectedFunctions.values());
+
+            // Update Files Affected
+            List<AffectedItem> fileAffectedList = new ArrayList<>();
+            for (String pathString: valueList) {
+                Path p = Paths.get(pathString);
+                String fileName = p.getFileName().toString();
+                AffectedItem affectedItem = new AffectedItem();
+                affectedItem.setAffected(fileName);
+                fileAffectedList.add(affectedItem);
+            }
             bug.setFileAffected(fileAffectedList);
 
-            bug.setFunctionImpactPercentage(55.5f);
-
-            System.out.println("HardCoded AffectedFunc in BugImpactAnalysis");
-
-//            System.out.println(affectedItem.toString());
-
-//            functionCallAnalyzer.main1();
-
-            MethodCallAnalyzer methodCallAnalyzer = new MethodCallAnalyzer();
-            methodCallAnalyzer.main1();
-
-
+            int functionsAffectedCount = functionAffectedList.size();
+            float functionImpactPercentage = ((float)functionsAffectedCount/totalUniqueSignatureCount)*100;
+            bug.setFunctionImpactPercentage(functionImpactPercentage);
         }
+    }
 
+    private List<AffectedItem> convertToAffectedItems(Map<String, String> functionNamesWithLocations) {
+        List<AffectedItem> items = new ArrayList<>();
+        for (Map.Entry<String, String> entry : functionNamesWithLocations.entrySet()) {
+            AffectedItem item = new AffectedItem();
+            item.setAffected(entry.getKey());
+            items.add(item);
+        }
+        return items;
     }
 
 }
