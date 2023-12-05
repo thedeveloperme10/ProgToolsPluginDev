@@ -65,8 +65,9 @@ public class TableControlPanel extends NonOpaquePanel
 
     private void clearResults()
     {
-        bugImpact.setBugImpactList(new ArrayList<>());
-        this.bugImpactTableModel.setItems(new ArrayList<>());
+        bugImpact.getBugImpactList().clear();
+//        bugImpact.setBugImpactList(new ArrayList<>());
+        this.bugImpactTableModel.setItems(bugImpact.getBugImpactList());
     }
 
     public class SearchAction extends DumbAwareAction

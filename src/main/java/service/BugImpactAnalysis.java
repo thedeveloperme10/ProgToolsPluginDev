@@ -30,7 +30,6 @@ public class BugImpactAnalysis {
 
         functionCallAnalyzer.analyzeProject(); // Analyze the project to build the function call map
 
-
         for (BugImpact bug : bugImpactList) {
             // Get the signature of the buggy function
             String buggyFunctionSignature = bug.getBugMethodName(); // Modify BugImpact to include this information
